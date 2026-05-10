@@ -1,22 +1,3 @@
-<!--
-Este archivo es parte del proyecto GenPromptPreICFES11
-
-Copyright (C) 2024 CREARED.EDU.CO
-
-Este programa es software libre: puedes redistribuirlo y/o modificarlo 
-bajo los términos de la Licencia Pública General Affero de GNU publicada 
-por la Free Software Foundation, ya sea la versión 3 de la Licencia, 
-o (a tu elección) cualquier versión posterior.
-
-Este programa se distribuye con la esperanza de que sea útil, 
-pero SIN NINGUNA GARANTÍA; sin incluso la garantía implícita de 
-COMERCIABILIDAD o IDONEIDAD PARA UN PROPÓSITO PARTICULAR. 
-Consulta la Licencia Pública General Affero de GNU para más detalles.
-
-Deberías haber recibido una copia de la Licencia Pública General Affero de GNU 
-junto con este programa. En caso contrario, consulta <https://www.gnu.org/licenses/why-affero-gpl.html>.
--->
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -84,7 +65,7 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 			font-family: var(--font-principal);
 			line-height: 1.6;
 			margin: 0;
-			padding: 0;
+			padding: 15px;
 			background-color: var(--color-fondo);
 			color: var(--color-texto);
 		}
@@ -94,13 +75,14 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
    ============================ */
 
 		.contenedor {
-			width: 80%;
-			max-width: 800px;
-			margin: auto;
-			padding: 20px;
+			width: 100%;
+			max-width: 100%;
+			margin: 0;
+			padding: 25px;
 			background-color: var(--color-fondo);
 			border-radius: var(--radio-borde-grande);
-			box-shadow: var(--sombra-caja);
+			box-shadow: none; /* Se quita la sombra para que se vea más natural dentro del iframe */
+			border: 1px solid var(--color-borde);
 		}
 
 		/* ============================
@@ -181,16 +163,7 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 			background-color: var(--color-primario-hover);
 		}
 
-		/* Estilo para el botón de borrar todos los prompts */
-		.borrar-todos {
-			background-color: var(--color-peligro);
-			width: 100%;
-			margin-bottom: 10px;
-		}
 
-		.borrar-todos:hover {
-			background-color: var(--color-peligro-hover);
-		}
 
 		/* ============================
    Estilos de la ventana modal
@@ -218,7 +191,7 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 			padding: 20px;
 			border: 1px solid var(--color-borde);
 			width: 90%;
-			max-width: 600px;
+			max-width: 90%;
 			max-height: 80vh;
 			border-radius: var(--radio-borde-grande);
 			box-shadow: var(--sombra-modal);
@@ -226,19 +199,17 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 		}
 
 		/* Botones en la ventana modal */
-		.modal-boton-cerrar,
-		.modal-boton-eliminar {
+		.modal-boton-cerrar {
 			background-color: var(--color-peligro);
 			width: 100%;
 			margin: var(--espaciado-botones-modal) 0;
 		}
 
-		.modal-boton-cerrar:hover,
-		.modal-boton-eliminar:hover {
+		.modal-boton-cerrar:hover {
 			background-color: var(--color-peligro-hover);
 		}
 
-		/* Botones de IA (Gemini y ChatGPT) */
+		/* Botón de IA (ChatGPT) */
 		.modal-boton-ia {
 			display: block;
 			margin: var(--espaciado-botones-modal) 0;
@@ -280,48 +251,17 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 			font-size: 1rem;
 		}
 
-		/* ============================
-   Estilos para prompts guardados
-   ============================ */
 
-		#promptsGuardadosSeccion {
-			margin-top: 20px;
-			padding: 20px;
-			background-color: var(--color-fondo-seccion);
-			border-radius: var(--radio-borde-pequeno);
-		}
-
-		#promptsGuardadosSeccion h2 {
-			margin-top: 0;
-			color: var(--color-texto);
-		}
-
-		#listaPromptsGuardados {
-			list-style-type: none;
-			padding: 0;
-		}
-
-		#listaPromptsGuardados li {
-			background-color: var(--color-fondo);
-			margin-bottom: 10px;
-			padding: 10px;
-			border-radius: var(--radio-borde-pequeno);
-			cursor: pointer;
-			transition: var(--transicion-transformacion), background-color 0.2s ease;
-		}
-
-		#listaPromptsGuardados li:hover {
-			background-color: var(--color-fondo-hover);
-			transform: translateX(10px);
-		}
 
 		/* ============================
    Responsiveness
    ============================ */
 
 		@media screen and (max-width: 800px) {
+			body {
+				padding: 10px;
+			}
 			.contenedor {
-				width: 95%;
 				padding: 15px;
 			}
 
@@ -412,12 +352,7 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 			<!-- Botón para generar el prompt y abrir la ventana modal -->
 			<button type="submit">GENERAR PROMPT</button>
 		</form>
-		<!-- Sección para borrar y mostrar los prompts guardados -->
-		<div id="promptsGuardadosSeccion">
-			<h2>PROMPTS GUARDADOS:</h2>
-			<button id="borrarTodosPrompts" class="borrar-todos">BORRAR TODOS LOS PROMPTS GUARDADOS</button>
-			<ul id="listaPromptsGuardados"></ul>
-		</div>
+
 	</div>
 	<!-- Ventana modal flotante para mostrar el prompt generado -->
 	<div id="modalPrompt" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitulo">
@@ -425,15 +360,12 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 			<h2 id="modalTitulo" class="sr-only">Prompt generado</h2>
 			<!-- Botón para cerrar y volver al formulario -->
 			<button id="modalBotonCerrar" class="modal-boton-cerrar">Cerrar y volver al formulario</button>
-			<!-- Botones para abrir en Gemini y ChatGPT -->
-			<a id="modalBotonGemini" class="modal-boton-ia" href="#" target="_blank" rel="noopener noreferrer">ABRIR EN
-				GEMINI</a>
+			<!-- Botón para abrir en ChatGPT -->
 			<a id="modalBotonChatGPT" class="modal-boton-ia" href="#" target="_blank" rel="noopener noreferrer">ABRIR EN
 				CHATGPT</a>
 			<!-- Botón para copiar el prompt generado -->
 			<button id="modalBotonCopiar" class="modal-boton-ia">COPIAR PROMPT GENERADO</button>
-			<!-- Botón para eliminar prompt -->
-			<button id="modalBotonEliminar" class="modal-boton-eliminar">Borrar solo este prompt</button>
+
 			<!-- Texto con el prompt -->
 			<output id="modalResultado" aria-live="polite"></output>
 		</div>
@@ -1535,7 +1467,7 @@ junto con este programa. En caso contrario, consulta <https://www.gnu.org/licens
 					'Reconocer el tono y registro básico'
 				]
 			}
-		};
+		}
 
 	</script>
 
@@ -1808,34 +1740,12 @@ ${promptActividad}
 				formulario: document.getElementById('formularioPrompt'),
 				modal: document.getElementById('modalPrompt'),
 				modalResultado: document.getElementById('modalResultado'),
-				modalBotonGemini: document.getElementById('modalBotonGemini'),
 				modalBotonChatGPT: document.getElementById('modalBotonChatGPT'),
 				modalBotonCerrar: document.getElementById('modalBotonCerrar'),
-				modalBotonCopiar: document.getElementById('modalBotonCopiar'),
-				listaPromptsGuardados: document.getElementById('listaPromptsGuardados'),
-				modalBotonEliminar: document.getElementById('modalBotonEliminar'),
-				borrarTodosPrompts: document.getElementById('borrarTodosPrompts')
+				modalBotonCopiar: document.getElementById('modalBotonCopiar')
 			};
 
-			// Variables para manejar prompts guardados
-			function cargarPromptsGuardados() {
-				try {
-					const promptsSerializados = localStorage.getItem('promptsGuardados');
-					if (!promptsSerializados) {
-						return [];
-					}
 
-					const promptsParseados = JSON.parse(promptsSerializados);
-					return Array.isArray(promptsParseados) ? promptsParseados : [];
-				} catch (e) {
-					console.warn('No se pudieron cargar los prompts guardados:', e);
-					localStorage.removeItem('promptsGuardados');
-					return [];
-				}
-			}
-
-			let promptsGuardados = cargarPromptsGuardados();
-			let promptSeleccionadoIndex = -1;
 
 			// ============================
 			// FUNCIONES AUXILIARES
@@ -1903,222 +1813,87 @@ ${promptActividad}
 			}
 
 			/**
-			 * Actualiza los enlaces de los botones de IA con el prompt.
-			 * @param {string} prompt - El prompt a incluir en los enlaces.
+			 * Actualiza el enlace del botón de IA con el prompt.
+			 * @param {string} prompt - El prompt a incluir en el enlace.
 			 */
 			function actualizarEnlacesIA(prompt) {
 				try {
-					// Validar que los elementos existen antes de actualizar
-					if (elementos.modalBotonGemini && elementos.modalBotonChatGPT) {
-						elementos.modalBotonGemini.href = `https://gemini.google.com/guided-learning?query=${encodeURIComponent(prompt)}`;
+					// Validar que el elemento existe antes de actualizar
+					if (elementos.modalBotonChatGPT) {
 						elementos.modalBotonChatGPT.href = `https://chatgpt.com/?prompt=${encodeURIComponent(prompt)}&hints=study`;
 					} else {
-						console.warn('Los botones de IA no están disponibles en el DOM');
+						console.warn('El botón de IA no está disponible en el DOM');
 					}
 				} catch (error) {
-					console.error('Error al actualizar enlaces de IA:', error);
+					console.error('Error al actualizar el enlace de IA:', error);
 					// No lanzar el error para evitar bloquear la ejecución
 				}
 			}
 
 			/**
-			 * Copia el texto del prompt al portapapeles con fallback para Google Sites.
+			 * Copia el texto del prompt al portapapeles con fallback para iframes.
 			 */
 			function copiarAlPortapapeles() {
 				const texto = elementos.modalResultado.textContent;
 
-				// Intento con la API moderna (requiere HTTPS y permisos de iframe)
+				// Intento 1: API Moderna (Navigator)
 				if (navigator.clipboard && window.isSecureContext) {
 					navigator.clipboard.writeText(texto).then(() => {
 						confirmarCopiado();
-					}).catch(() => {
-						copiadoFallback(texto);
+					}).catch(err => {
+						console.warn('Fallo Clipboard API, intentando fallback...', err);
+						copiarFallback(texto);
 					});
 				} else {
-					copiadoFallback(texto);
+					// Intento 2: Método tradicional (Fallback)
+					copiarFallback(texto);
 				}
+			}
 
-				function confirmarCopiado() {
-					elementos.modalBotonCopiar.textContent = 'PROMPT COPIADO';
-					setTimeout(() => {
-						elementos.modalBotonCopiar.textContent = 'COPIAR PROMPT GENERADO';
-					}, 2000);
-				}
+			/**
+			 * Método de respaldo para entornos con restricciones de seguridad (iframes)
+			 */
+			function copiarFallback(texto) {
+				try {
+					const textArea = document.createElement("textarea");
+					textArea.value = texto;
 
-				function copiadoFallback(textoACopiar) {
-					try {
-						const textArea = document.createElement("textarea");
-						textArea.value = textoACopiar;
-						// Asegurar que no sea visible pero esté en el DOM para poder ser seleccionado
-						textArea.style.position = "fixed";
-						textArea.style.left = "-9999px";
-						textArea.style.top = "0";
-						document.body.appendChild(textArea);
-						textArea.focus();
-						textArea.select();
-						const exito = document.execCommand('copy');
-						document.body.removeChild(textArea);
-						if (exito) {
-							confirmarCopiado();
-						} else {
-							throw new Error('execCommand falló');
-						}
-					} catch (err) {
-						console.error('Error en fallback de copia: ', err);
-						mostrarError('No se pudo copiar automáticamente. Por favor, copia el texto manualmente.');
+					// Aseguramos que no sea visible pero esté en el DOM
+					textArea.style.position = "fixed";
+					textArea.style.left = "-9999px";
+					textArea.style.top = "0";
+					document.body.appendChild(textArea);
+
+					textArea.focus();
+					textArea.select();
+
+					const exitoso = document.execCommand('copy');
+					document.body.removeChild(textArea);
+
+					if (exitoso) {
+						confirmarCopiado();
+					} else {
+						throw new Error('execCommand devolvió false');
 					}
+				} catch (err) {
+					console.error('Error en fallback de copiado:', err);
+					mostrarError('No se pudo copiar. Por favor, selecciona el texto y cópialo manualmente.');
 				}
 			}
 
 			/**
-			 * Guarda un prompt en el almacenamiento local.
-			 * @param {string} prompt - El prompt a guardar.
-			 * @param {string} materia - La materia del prompt.
-			 * @param {string} temaPrincipal - El tema principal del prompt.
-			 * @param {string} subtema - El subtema del prompt.
-			 * @param {string} tipoActividad - El tipo de actividad del prompt.
+			 * Actualiza visualmente el botón al copiar con éxito
 			 */
-			function guardarPrompt(prompt, materia, temaPrincipal, subtema, tipoActividad) {
-				promptsGuardados.push({ prompt, materia, temaPrincipal, subtema, tipoActividad });
-				try {
-					localStorage.setItem('promptsGuardados', JSON.stringify(promptsGuardados));
-				} catch (e) {
-					console.warn('No se pudo guardar en localStorage:', e);
-				}
-				actualizarListaPromptsGuardados();
+			function confirmarCopiado() {
+				elementos.modalBotonCopiar.textContent = 'PROMPT COPIADO';
+				setTimeout(() => {
+					elementos.modalBotonCopiar.textContent = 'COPIAR PROMPT GENERADO';
+				}, 2000);
 			}
 
-			/**
-			 * Elimina un prompt del almacenamiento local.
-			 * @param {number} index - El índice del prompt a eliminar.
-			 */
-			function eliminarPrompt(index) {
-				promptsGuardados.splice(index, 1);
-				try {
-					localStorage.setItem('promptsGuardados', JSON.stringify(promptsGuardados));
-				} catch (e) {
-					console.warn('No se pudo guardar en localStorage:', e);
-				}
-				actualizarListaPromptsGuardados();
-			}
 
-			/**
-			 * Actualiza la lista de prompts guardados en la interfaz.
-			 */
-			function actualizarListaPromptsGuardados() {
-				elementos.listaPromptsGuardados.innerHTML = '';
-				promptsGuardados.forEach((promptData, index) => {
-					const li = document.createElement('li');
-					li.textContent = `${index + 1}. ${promptData.materia}: ${promptData.temaPrincipal} - ${promptData.subtema}. Actividad de ${promptData.tipoActividad}`;
-					li.addEventListener('click', () => mostrarPromptGuardado(index));
-					elementos.listaPromptsGuardados.appendChild(li);
-				});
-			}
 
-			/**
-			 * Muestra un prompt guardado en la ventana modal.
-			 * @param {number} index - El índice del prompt a mostrar.
-			 */
-			function mostrarPromptGuardado(index) {
-				const prompt = promptsGuardados[index].prompt;
-				elementos.modalResultado.textContent = prompt;
-				actualizarEnlacesIA(prompt);
-				promptSeleccionadoIndex = index;
-				elementos.modalBotonEliminar.disabled = false;
-				elementos.modal.style.display = 'block';
-			}
 
-			/**
-			 * Borra todos los prompts guardados.
-			 */
-			function borrarTodosLosPrompts() {
-				promptsGuardados = [];
-				try {
-					localStorage.removeItem('promptsGuardados');
-				} catch (e) {
-					console.warn('No se pudo limpiar localStorage:', e);
-				}
-				actualizarListaPromptsGuardados();
-			}
-
-			/**
-			 * Muestra una ventana de confirmación.
-			 * @param {string} mensaje - El mensaje de confirmación.
-			 * @param {Function} onConfirm - Función a ejecutar si se confirma.
-			 */
-			function mostrarConfirmacion(mensaje, onConfirm) {
-				const contenedorModal = document.createElement('div');
-				contenedorModal.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        `;
-
-				const divConfirmacion = document.createElement('div');
-				divConfirmacion.style.cssText = `
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            max-width: 80%;
-            text-align: center;
-        `;
-
-				const textoMensaje = document.createElement('p');
-				textoMensaje.textContent = mensaje;
-				textoMensaje.style.marginBottom = '20px';
-
-				const botonConfirmar = document.createElement('button');
-				botonConfirmar.textContent = 'Confirmar';
-				botonConfirmar.style.cssText = `
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-right: 10px;
-        `;
-
-				const botonCancelar = document.createElement('button');
-				botonCancelar.textContent = 'Cancelar';
-				botonCancelar.style.cssText = `
-            background-color: #f44336;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        `;
-
-				divConfirmacion.appendChild(textoMensaje);
-				divConfirmacion.appendChild(botonConfirmar);
-				divConfirmacion.appendChild(botonCancelar);
-				contenedorModal.appendChild(divConfirmacion);
-				document.body.appendChild(contenedorModal);
-
-				botonConfirmar.addEventListener('click', () => {
-					onConfirm();
-					contenedorModal.remove();
-				});
-
-				botonCancelar.addEventListener('click', () => {
-					contenedorModal.remove();
-				});
-
-				contenedorModal.addEventListener('click', function (evento) {
-					if (evento.target === contenedorModal) {
-						contenedorModal.remove();
-					}
-				});
-			}
 
 			// ============================
 			// EVENT LISTENERS
@@ -2152,14 +1927,6 @@ ${promptActividad}
 				if (Object.values(datosFormulario).every(Boolean)) {
 					try {
 						const prompt = generarPrompt(datosFormulario);
-						guardarPrompt(
-							prompt,
-							datosFormulario.valorMateria,
-							datosFormulario.valorTemaPrincipal,
-							datosFormulario.valorSubtema,
-							datosFormulario.tipoActividad
-						);
-						promptSeleccionadoIndex = promptsGuardados.length - 1;
 						elementos.modalResultado.textContent = prompt;
 						actualizarEnlacesIA(prompt);
 					} catch (error) {
@@ -2167,7 +1934,6 @@ ${promptActividad}
 						elementos.modalResultado.textContent = 'Ocurrió un error al generar el prompt. Por favor, revisa la consola para más detalles.';
 					}
 					elementos.modalBotonCopiar.textContent = 'COPIAR PROMPT GENERADO';
-					elementos.modalBotonEliminar.disabled = false;
 					elementos.modal.style.display = 'block';
 				} else {
 					mostrarError('Por favor, completa todos los campos.');
@@ -2189,28 +1955,8 @@ ${promptActividad}
 					elementos.modal.style.display = 'none';
 				}
 			});
-
-			// Evento para eliminar un prompt
-			elementos.modalBotonEliminar.addEventListener('click', () => {
-				if (promptSeleccionadoIndex !== -1) {
-					eliminarPrompt(promptSeleccionadoIndex);
-					elementos.modal.style.display = 'none';
-					promptSeleccionadoIndex = -1;
-				}
-			});
-
-			// Evento para borrar todos los prompts
-			elementos.borrarTodosPrompts.addEventListener('click', function () {
-				mostrarConfirmacion('¿Estás seguro de que quieres borrar todos los prompts guardados?', borrarTodosLosPrompts);
-			});
-
-			// ============================
-			// INICIALIZACIÓN
-			// ============================
-
-			// Inicializar la lista de prompts guardados
-			actualizarListaPromptsGuardados();
 		});
 	</script>
 </body>
+
 </html>
