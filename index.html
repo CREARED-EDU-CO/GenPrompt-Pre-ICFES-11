@@ -446,15 +446,6 @@
 				<label for="materia">Materia:</label>
 				<select id="materia" aria-describedby="materiaDesc" required>
 					<option value="">Selecciona una materia</option>
-					<option value="LECTURA CRÍTICA">LECTURA CRÍTICA</option>
-					<option value="MATEMÁTICAS">MATEMÁTICAS</option>
-					<option value="FÍSICA">FÍSICA</option>
-					<option value="QUÍMICA">QUÍMICA</option>
-					<option value="BIOLOGÍA">BIOLOGÍA</option>
-					<option value="GEOGRAFÍA">GEOGRAFÍA</option>
-					<option value="HISTORIA">HISTORIA</option>
-					<option value="COMPETENCIAS CIUDADANAS">COMPETENCIAS CIUDADANAS</option>
-					<option value="INGLÉS">INGLÉS</option>
 				</select>
 			</div>
 			<!-- Selector de tema principal -->
@@ -2483,6 +2474,7 @@ ${promptActividad}
 			// INICIALIZACIÓN
 			// ============================
 			elementos.modalBotonEliminar.disabled = true;
+			poblarSelect(elementos.materia, Object.keys(temas), 'Selecciona una materia');
 			const resultadoCatalogo = DomainValidator.validarCatalogo(elementos.materia);
 			if (!resultadoCatalogo.valido) {
 				console.warn('El catálogo de la interfaz no coincide con el catálogo de dominio:', resultadoCatalogo);
