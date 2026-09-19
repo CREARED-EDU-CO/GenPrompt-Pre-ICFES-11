@@ -45,8 +45,11 @@ La aplicación cubre todas las áreas fundamentales evaluadas por el ICFES:
 5. Copia el resultado o ábrelo directamente en tu chatbot de IA preferido para comenzar tu sesión de estudio.
 
 ## 📄 Licencia y Términos de Uso
-Este proyecto es de uso libre. Puedes descargarlo, utilizarlo y modificarlo según tus necesidades.
-**⚠️ Importante:** Está estrictamente prohibido cobrar por el acceso o uso de esta herramienta. Su propósito es exclusivamente educativo y gratuito.
+Este proyecto se distribuye bajo la licencia **GNU Affero General Public License v3.0 (AGPLv3)**. Puedes descargarlo, utilizarlo, estudiarlo, modificarlo y redistribuirlo, incluso como parte de versiones derivadas, siempre que respetes los términos de la licencia.
+
+Si publicas o pones a disposición una versión modificada de la aplicación, incluyendo su uso a través de una red o sitio web, debes mantener la misma licencia y ofrecer el código fuente correspondiente de esa versión.
+
+El propósito del proyecto es educativo y busca facilitar el acceso a herramientas de preparación para el examen SABER 11.
 
 ---
 *Desarrollado para fortalecer la educación media en Colombia.*
